@@ -2,6 +2,28 @@
 
 [toc]
 
+## General Notes
+
+Keep in mind that in the Microsoft documentation site, the samples can be downloaded from GitHub and for learning purposes.
+
+The scope of this cookbook should focus on smaller implementations.
+
+Also there needs to be a practice set, and a practice set program for daily practices of the WPF  implementations and ideas.
+
+
+
+## ValidationRule
+
+Validation Rules are WPF's way to validate input data.
+
+### Problem
+
+### Solution
+
+### There's More
+
+### References
+
 ## BindingGroup
 
 Binding Groups contain a collection of bindings and validation rules that are used to validate an object.
@@ -23,7 +45,7 @@ You want to write validation rules for your form, which, depending on user's inp
 
 For the Application (or, current input page), we want to validate all and then allow submission.
 
-### Preparation
+### Solution
 
 Step 1: Create a new project in Visual Studio for WPF .net framework.
 
@@ -131,13 +153,84 @@ So far the XAML file presents basic UI for the application and gives the applica
 
 ![groupbinding-step4-1](./images/groupbinding-step4-1.jpg)
 
+Step 5: Create Binding Object `MachineInfo` in Models folder, populate it with 4 fields: Hostname, Domain, IPv4Address, and IPv6Address
 
+```c#
+using System.Net;
 
-### Solution
+namespace WPF_GroupBinding_Example.Models
+{
+    class MachineInfo
+    {
+        private string hostname;
+
+        public string HostName
+        {
+            get { return hostname; }
+            set { hostname = value; }
+        }
+
+        private string domain;
+
+        public string Domain
+        {
+            get { return domain; }
+            set { domain = value; }
+        }
+
+        private IPAddress ipv4address;
+
+        public IPAddress IPv4Address
+        {
+            get { return ipv4address; }
+            set { ipv4address = value; }
+        }
+
+        private IPAddress ipv6address;
+
+        public IPAddress IPv6Address
+        {
+            get { return ipv6address; }
+            set { ipv6address = value; }
+        }
+
+    }
+}
+```
+
+Step 6: Create MainWindowViewModels.cs file under ViewModels Folder
+
+```C#
+using WPF_GroupBinding_Example.Models;
+
+namespace WPF_GroupBinding_Example.ViewModels
+{
+    class MainWindowViewModels
+    {
+        public MachineInfo FormMachineInfo { get; set; }
+
+    }
+}
+```
+
+Step 7: Bind the view model to the MainWindow.xaml.cs on the Stack Panel Load event handler
+
+```c#
+...
+private void stackPanel1_Loaded(object sender, RoutedEventArgs e)
+        {
+            stackPanel1.DataContext = new MachineInfo();
+        }
+...
+```
+
+Step 8: Bind the object in MainWindow.xaml controls.
+
+<span style="color:white;background:red">Note from author: The example on the website is not complete, need to have more skills.</span>
 
 ### There's More
 
-### References:
+### References
 
 Microsoft. (2018, April 30). *BindingGroup Class (System.Windows.Data) | Microsoft Docs*. Retrieved from Microsoft Documentation: https://docs.microsoft.com/en-us/dotnet/api/system.windows.data.bindinggroup?view=netcore-3.1
 
